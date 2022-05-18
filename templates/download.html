@@ -1,0 +1,33 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>YouTube Downloader</title>
+    <link rel="stylesheet" href="{% static 'css/info.css' %}"/>
+</head>
+<body>
+<header>
+    <div class="container">
+        <div class="image-box">
+            <img class="image" src="static/images/yt_1200.jpg" alt="Youtube"/>
+        </div>
+        <h1 class="title">Downloader</h1>
+        <div class="box">
+            <form method="post" class="forma">
+                <select class="select" name="" id="">
+                    <option value="360p">360p</option>
+                    <option value="480p">480p</option>
+                    <option value="720p">720p</option>
+                    <option value="1080p">1080p</option>
+                </select>
+                <button class="yuklash">Yuklash</button>
+            </form>
+            <button class="btn">Bosh sahifaga o'tish</button>
+        </div>
+    </div>
+</header>
+</body>
+</html>
