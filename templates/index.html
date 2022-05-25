@@ -16,11 +16,21 @@
         </div>
         <h1 class="download">Downloader</h1>
         <div class="box">
-            <form action="" method="post">{% csrf_token %}
-                <input class="text-link" id="link" name="link"/>
-                <input type="submit" value="Download"/>
-            </form>
+          <form method="POST">
+            {% csrf_token %}
+            <div class="form">
+                <input type="text"  class="text-link" id="text-link" name="url" placeholder="Video Linkini kiriting">
+                <button id="get-video-info" class="btn btn-warning">Tasdiqlash</button>
+            </div>
+        </form>
         </div>
+<!--         <form method="POST">-->
+<!--            {% csrf_token %}-->
+<!--            <div class="form">-->
+<!--                <input type="text" name="url" placeholder="Video Linkini kiriting">-->
+<!--                <button id="get-video-info" class="btn btn-warning">Tasdiqlash</button>-->
+<!--            </div>-->
+<!--        </form>-->
         <footer>
             <h3>Frontend by Asilbek H.</h3>
             <h3>Backend by Ibrohim T.</h3>

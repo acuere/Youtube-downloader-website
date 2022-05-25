@@ -2,30 +2,49 @@ from django.shortcuts import render
 from django.views.generic import View
 from pytube import *
 
-
 # Create your views here.
 
-class HomePageView(View):
-    def index(request):
-        template_name = 'index.html'
-        return render(request, template_name)
 
-    success_url = '/'
-
-
-class DownloadView():
-    def download(request):
-        if request.method == 'POST':
-            link = request.POST['link']
-            video = YouTube(link)
-
-            stream = video.streams.get_highest_resolution()
-            stream.download()
-
-            return render(request, 'download.html')
-        return render(request, 'download.html')
+from django.shortcuts import render, redirect
+from pytube import YouTube
+from django.http import FileResponse
+from io import BytesIO
 
 
-class ErrorView():
-    def error(request):
-        return render(request, 'error.html')
+# Create your views here.
+def home(request):
+    if request.method == "POST":
+        print((type(request)))
+        print(request.POST)
+        request.session['link'] = request.POST['url']
+        try:
+            url = YouTube(request.session['link'])
+            url.check_availability()
+
+            streams = url.streams.filter(progressive=True)
+            print((streams))
+        except:
+            return render(request, "error.html")
+        return render(request, "download.html", {'streams': streams, 'url': url})
+    return render(request, "index.html")
+
+
+def download(request):
+    if request.method == "POST":
+        buffer = BytesIO()
+        url = YouTube(request.session['link'])
+        itag = request.POST["itag"]
+        if itag == 'audio':
+            audio = url.streams.get_audio_only()
+            audio.stream_to_buffer(buffer)
+            buffer.seek(0)
+            filename = url.title + '.mp3'
+            return FileResponse(buffer, filename=filename, as_attachment=True, content_type="audio/mp3")
+        else:
+
+            video = url.streams.get_by_itag(itag)
+            video.stream_to_buffer(buffer)
+            buffer.seek(0)
+            filename = url.title + ".mp4"
+            return FileResponse(buffer, filename=filename, as_attachment=True, content_type="video/mp4")
+    return redirect("/home")
