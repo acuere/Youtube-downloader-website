@@ -21,7 +21,7 @@ def home(request):
             url = YouTube(request.session['link'])
             url.check_availability()
 
-            streams = url.streams.filter(progressive=True)
+            streams = url.streams.filter(progressive= True).all()
             print((streams))
         except:
             return render(request, "error.html")
