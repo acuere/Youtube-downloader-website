@@ -1,10 +1,3 @@
-from django.shortcuts import render
-from django.views.generic import View
-from pytube import *
-
-# Create your views here.
-
-
 from django.shortcuts import render, redirect
 from pytube import YouTube
 from django.http import FileResponse
@@ -21,7 +14,7 @@ def home(request):
             url = YouTube(request.session['link'])
             url.check_availability()
 
-            streams = url.streams.filter(progressive= True).all()
+            streams = url.streams.filter(progressive=True).all()
             print((streams))
         except:
             return render(request, "error.html")

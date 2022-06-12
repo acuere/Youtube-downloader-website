@@ -7,6 +7,8 @@ name = "pypi"
 django = "*"
 pytube = "*"
 django-extensions = "*"
+requests = "*"
+wget = "*"
 
 [dev-packages]
 
